@@ -50,7 +50,7 @@ export default class InfiniteScroll extends Component<Props, State> {
 
   private throttledOnScrollListener: (e: MouseEvent) => void;
   private _scrollableNode: HTMLElement | undefined | null;
-  private el: HTMLElement | undefined | Window & typeof globalThis;
+  private el: HTMLElement | undefined | (Window & typeof globalThis);
   private _infScroll: HTMLDivElement | undefined;
   private lastScrollTop = 0;
   private actionTriggered = false;
@@ -79,8 +79,10 @@ export default class InfiniteScroll extends Component<Props, State> {
       : this._scrollableNode || window;
 
     if (this.el) {
-      this.el.addEventListener('scroll', this
-        .throttledOnScrollListener as EventListenerOrEventListenerObject);
+      this.el.addEventListener(
+        'scroll',
+        this.throttledOnScrollListener as EventListenerOrEventListenerObject
+      );
     }
 
     if (
@@ -122,8 +124,10 @@ export default class InfiniteScroll extends Component<Props, State> {
 
   componentWillUnmount() {
     if (this.el) {
-      this.el.removeEventListener('scroll', this
-        .throttledOnScrollListener as EventListenerOrEventListenerObject);
+      this.el.removeEventListener(
+        'scroll',
+        this.throttledOnScrollListener as EventListenerOrEventListenerObject
+      );
 
       if (this.props.pullDownToRefresh) {
         this.el.removeEventListener('touchstart', this.onStart);
@@ -207,8 +211,9 @@ export default class InfiniteScroll extends Component<Props, State> {
 
     if (this._infScroll) {
       this._infScroll.style.overflow = 'visible';
-      this._infScroll.style.transform = `translate3d(0px, ${this.currentY -
-        this.startY}px, 0px)`;
+      this._infScroll.style.transform = `translate3d(0px, ${
+        this.currentY - this.startY
+      }px, 0px)`;
     }
   };
 
@@ -246,15 +251,13 @@ export default class InfiniteScroll extends Component<Props, State> {
     if (threshold.unit === ThresholdUnits.Pixel) {
       return (
         target.scrollTop <=
-          threshold.value + clientHeight - target.scrollHeight + 1 ||
-        target.scrollTop === 0
+        threshold.value + clientHeight - target.scrollHeight + 1
       );
     }
 
     return (
       target.scrollTop <=
-        threshold.value / 100 + clientHeight - target.scrollHeight + 1 ||
-      target.scrollTop === 0
+      threshold.value / 100 + clientHeight - target.scrollHeight + 1
     );
   }
 
