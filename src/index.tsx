@@ -79,10 +79,8 @@ export default class InfiniteScroll extends Component<Props, State> {
       : this._scrollableNode || window;
 
     if (this.el) {
-      this.el.addEventListener(
-        'scroll',
-        this.throttledOnScrollListener as EventListenerOrEventListenerObject
-      );
+      this.el.addEventListener('scroll', this
+        .throttledOnScrollListener as EventListenerOrEventListenerObject);
     }
 
     if (
@@ -124,10 +122,8 @@ export default class InfiniteScroll extends Component<Props, State> {
 
   componentWillUnmount() {
     if (this.el) {
-      this.el.removeEventListener(
-        'scroll',
-        this.throttledOnScrollListener as EventListenerOrEventListenerObject
-      );
+      this.el.removeEventListener('scroll', this
+        .throttledOnScrollListener as EventListenerOrEventListenerObject);
 
       if (this.props.pullDownToRefresh) {
         this.el.removeEventListener('touchstart', this.onStart);
@@ -211,9 +207,8 @@ export default class InfiniteScroll extends Component<Props, State> {
 
     if (this._infScroll) {
       this._infScroll.style.overflow = 'visible';
-      this._infScroll.style.transform = `translate3d(0px, ${
-        this.currentY - this.startY
-      }px, 0px)`;
+      this._infScroll.style.transform = `translate3d(0px, ${this.currentY -
+        this.startY}px, 0px)`;
     }
   };
 
